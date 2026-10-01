@@ -1,0 +1,34 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Install Apktool
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y apktool
+
+    - name: Build APK with Apktool
+      run: |
+        apktool b . -o dist/ProxyPro_release.apk
+
+    - name: Upload Built APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: ProxyPro-Signed
+        path: dist/ProxyPro_release.apk
+
