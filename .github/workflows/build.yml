@@ -22,9 +22,13 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y apktool
 
-    - name: Build APK with Apktool
+    - name: Clean conflicting backup files
       run: |
-        apktool b . -o dist/ProxyPro_release.apk
+        find . -name "*.bak" -delete
+
+    - name: Build APK with Apktool (No resource restrictions)
+      run: |
+        apktool b . -o dist/ProxyPro_release.apk --use-aapt2 || apktool b . -o dist/ProxyPro_release.apk
 
     - name: Upload Built APK
       uses: actions/upload-artifact@v4
