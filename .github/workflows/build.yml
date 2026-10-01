@@ -31,4 +31,3 @@ jobs:
       with:
         name: ProxyPro-Signed
         path: dist/ProxyPro_release.apk
-
